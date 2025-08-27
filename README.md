@@ -1,1 +1,0 @@
-# analisis-datos-fac-equipo--n-mero-
