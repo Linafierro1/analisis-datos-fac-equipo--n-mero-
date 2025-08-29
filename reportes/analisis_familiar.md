@@ -1,4 +1,4 @@
-*Resultados del Análisis Familiar
+# Resultados del Análisis Familiar
 
 ## 🔹 Análisis Estado Civil
 **Distribución:**
