@@ -1,9 +1,10 @@
 # demografia_basica.py
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy.stats import chi2_contingency
 
 # Leer los datos
-df = pd.read_excel('datos/JEFAB_2024:v2.xlsx')
+df = pd.read_excel('datos/JEFAB_2024_v2.xlsx')
 
 # Explorar estructura básica
 print("=== INFORMACIÓN GENERAL ===")
@@ -18,14 +19,22 @@ print(f"Edad máxima: {df['EDAD2'].max()} años")
 print(f"Edad más frecuente (moda): {df['EDAD2'].mode()[0]} años")
 
 # Columnas esperadas
-COL_SEXO = 'SEXO'
-COL_RANGO = 'EDAD_RANGO'
-
-# Orden explícito (ajusta si agregas más bandas)
+COL_SEXO = "SEXO"
+COL_RANGO = "EDAD_RANGO"
 RANGOS_ORDENADOS = [
-    '18-22', '23-27', '28-32', '33-37', '38-42',
-    '43-47', '48-52', '53-57', '58-62', '63-67', '68-72'
+    "18-22","23-27","28-32","33-37","38-42",
+    "43-47","48-52","53-57","58-62","63-67","68-72"
 ]
+
+# Asegura strings limpios
+df[COL_SEXO]  = df[COL_SEXO].astype("string").str.strip().str.upper()
+
+# Categórica ordenada
+df[COL_RANGO] = pd.Categorical(df[COL_RANGO], categories=RANGOS_ORDENADOS, ordered=True)
+
+# 👉 Agrega 'Sin dato' y rellena NA sin romper categorías
+df[COL_RANGO] = df[COL_RANGO].cat.add_categories(["Sin dato"]).fillna("Sin dato")
+
 
 # Estandarizar EDAD_RANGO
 df[COL_RANGO] = df[COL_RANGO].astype('string').str.strip()
@@ -142,6 +151,55 @@ plt.show()
 # Análisis de género
 print("\n=== ANÁLISIS DE GÉNERO ===")
 print(df['GENERO'].value_counts())
+
+# === 1) Tablas de frecuencias por género ===
+freq_hombres = (
+    df.loc[df['SEXO'] == 'HOMBRE', 'EDAD_RANGO']
+      .value_counts()
+      .rename_axis("EDAD_RANGO")
+      .reset_index(name="conteo")
+      .sort_values("EDAD_RANGO")
+)
+freq_mujeres = (
+    df.loc[df['SEXO'] == 'MUJER', 'EDAD_RANGO']
+      .value_counts()
+      .rename_axis("EDAD_RANGO")
+      .reset_index(name="conteo")
+      .sort_values("EDAD_RANGO")
+)
+
+# Unir en una sola tabla
+tabla_genero = pd.merge(
+    freq_hombres, freq_mujeres,
+    on="EDAD_RANGO", how="outer", suffixes=("_H", "_M")
+)
+
+# Rellenar únicamente las columnas de conteo (numéricas) y dejar EDAD_RANGO intacta
+for col in ["conteo_H", "conteo_M"]:
+    if col in tabla_genero.columns:
+        tabla_genero[col] = tabla_genero[col].fillna(0).astype(int)
+
+# Calcular totales y porcentajes
+tabla_genero["total"] = tabla_genero["conteo_H"] + tabla_genero["conteo_M"]
+tabla_genero["%_H"]   = (tabla_genero["conteo_H"] / tabla_genero["total"] * 100).round(1)
+tabla_genero["%_M"]   = (tabla_genero["conteo_M"] / tabla_genero["total"] * 100).round(1)
+
+
+print("=== Distribución por rango y sexo ===")
+print(tabla_genero)
+
+# === 2) Gráfico comparativo ===
+plt.figure(figsize=(10,5))
+x = range(len(tabla_genero))
+plt.bar([i-0.2 for i in x], tabla_genero["conteo_H"], width=0.4, label="Hombres")
+plt.bar([i+0.2 for i in x], tabla_genero["conteo_M"], width=0.4, label="Mujeres")
+plt.xticks(x, tabla_genero["EDAD_RANGO"], rotation=45)
+plt.title("Distribución de EDAD_RANGO por Género")
+plt.xlabel("Rango de edad")
+plt.ylabel("Cantidad")
+plt.legend()
+plt.tight_layout()
+plt.show()
 
 # Análisis de grados solo para hombres
 print("\n=== ANÁLISIS DE GRADO MILITAR (SOLO HOMBRES) ===")
