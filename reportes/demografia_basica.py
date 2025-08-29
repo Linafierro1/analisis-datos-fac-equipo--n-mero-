@@ -1,28 +1,36 @@
 # demografia_basica.py
 import pandas as pd
 import matplotlib.pyplot as plt
+
 # Leer los datos
 df = pd.read_excel('datos/JEFAB_2024.xlsx')
+
 # Explorar estructura básica
 print("=== INFORMACIÓN GENERAL ===")
 print(f"Total de registros: {len(df)}")
 print(f"Total de columnas: {len(df.columns)}")
+
 # Análisis de edad
 print("\n=== ANÁLISIS DE EDAD ===")
 print(f"Edad promedio: {df['EDAD2'].mean():.1f} años")
 print(f"Edad mínima: {df['EDAD2'].min()} años")
 print(f"Edad máxima: {df['EDAD2'].max()} años")
+print(f"Edad más frecuente (moda): {df['EDAD2'].mode()[0]} años")
+
 # Análisis de género
 print("\n=== ANÁLISIS DE GÉNERO ===")
 print(df['GENERO'].value_counts())
+
 # Análisis de grados solo para hombres
 print("\n=== ANÁLISIS DE GRADO MILITAR (SOLO HOMBRES) ===")
 grados_hombres = df[df['GENERO'] == 'MASCULINO']['GRADO'].value_counts()
 print(grados_hombres.head(20))
+
 # Análisis de grados solo para mujeres
 print("\n=== ANÁLISIS DE GRADO MILITAR (SOLO MUJERES) ===")
 grados_mujeres = df[df['GENERO'] == 'FEMENINO']['GRADO'].value_counts()
 print(grados_mujeres.head(15))
+
 # Gráfico de edades
 plt.figure(figsize=(10, 6))
 plt.hist(df['EDAD2'], bins=20, edgecolor='black')
