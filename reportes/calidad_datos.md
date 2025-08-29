@@ -3,7 +3,7 @@
 ## 1. Descripción General
 El análisis se realizó sobre la base de datos **JEFAB_2024.xlsx**, que contiene **6.423 registros** y **231 variables**. Se trata de información sociofamiliar y demográfica de una población asociada a unidades de la Fuerza Aeroespacial Colombiana (**FAC**), georeferenciadas con un sistema de coordenadas ubicadas en distintos departamentos de Colombia.
 
-El script `calidad_datos.py` automatizarealiza varias tareas de visualización y diagnóstico, enfocadas en el tratamiento de valores faltantesy presencia en variables categóricas y numéricas, duplicados y detección de problemas de codificación.
+El script `calidad_datos.py` automatizarealiza varias tareas de visualización y diagnóstico, enfocadas en el tratamiento de valores faltantes y presencia en variables categóricas y numéricas, duplicados y detección de problemas de codificación.
 
 ---
 
@@ -59,7 +59,7 @@ Se usaron visualizaciones (`missingno`) para:
 ## 5. Duplicados
 - **Registros duplicados:** 0  
 
-Esto refleja registros únicos de los individuos.
+Esto refleja registros únicos de los datos.
 
 ---
 
@@ -77,7 +77,12 @@ Ejemplos:
 
 ---
 
-## 8. Conclusiones
+## 8. Base resultante
+Después de identificar las variables relevantes, se identificaron la presencia de datos faltantes pero en menor proporción, por ende se eliminó el 7,8% de la base de datos para trabajar sin datos faltantes.
+
+---
+
+## 9. Conclusiones
 - La base de datos tiene buena estructura general, sin duplicados, pero presenta **valores faltantes importantes en variables clave** (hijos, personas en el hogar, edades de padres) ya sea por omisión de registro o cuestión social para no diligenciar el dato.
 - Existen problemas de codificación en textos que requieren corrección para análisis descriptivos.
 - El siguiente paso lógico sería **aplicar imputación de valores faltantes** .
