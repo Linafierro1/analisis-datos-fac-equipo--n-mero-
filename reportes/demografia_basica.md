@@ -83,7 +83,7 @@ Se observa que en todos los casos la **banda 33–37** concentra la mayor propor
 3. En mujeres se observa mayor dispersión en los tramos **43–47** y **48–52** respecto a los hombres.  
 4. Las cohortes mayores de **58 años** tienen baja representación (<4%), lo que indica una población principalmente joven-adulta.  
 
-## nálisis de Género
+## Análisis de Género
 
 ### Cantidad total por género
 | Género     | Cantidad | % sobre total |
