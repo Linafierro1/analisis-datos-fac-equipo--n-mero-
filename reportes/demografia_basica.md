@@ -1,7 +1,7 @@
 # Reporte de Análisis Demográfico
 
 ## Rango de edad más común
-El rango de edad más frecuente en el personal FAC está entre **30 y 35 años**.
+El rango de edad más frecuente en el personal FAC está entre **33 y 35 años**.
 
 ### Estadísticos generales
 - **Edad promedio:** 36.7 años  
