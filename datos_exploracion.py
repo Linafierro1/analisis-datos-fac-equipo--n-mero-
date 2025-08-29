@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import chi2_contingency
 
 # Leer los datos
-df = pd.read_excel('analisis-datos-fac-equipo-3/datos/JEFAB_2024.xlsx')
+df = pd.read_excel('datos\\JEFAB_2024.xlsx')
 
 
 # Cambio de variables
@@ -38,10 +38,12 @@ print(missing_info.head(10))
 col = missing_info["Columna"].head(10)
 miss = df[col]
 msno.bar(miss, sort= "descending", color = "lightcoral")
+plt.show()
 
 # Mapa de calor de faltantes
 
 msno.heatmap(df)
+plt.show()
 
 # Análisis de duplicados
 print(f"\n=== ANÁLISIS DE DUPLICADOS ===")
@@ -96,13 +98,9 @@ df[COL_SEXO]  = df[COL_SEXO].astype("string").str.strip().str.upper()
 # Categórica ordenada
 df[COL_RANGO] = pd.Categorical(df[COL_RANGO], categories=RANGOS_ORDENADOS, ordered=True)
 
-# 👉 Agrega 'Sin dato' y rellena NA sin romper categorías
-df[COL_RANGO] = df[COL_RANGO].cat.add_categories(["Sin dato"]).fillna("Sin dato")
-
 
 # Estandarizar EDAD_RANGO
 df[COL_RANGO] = df[COL_RANGO].astype('string').str.strip()
-df[COL_RANGO] = df[COL_RANGO].replace({'nan': pd.NA})  # si viene como texto 'nan'
 
 df[COL_RANGO] = pd.Categorical(
     df[COL_RANGO],
@@ -113,8 +111,8 @@ df[COL_RANGO] = pd.Categorical(
 # Estandarizar SEXO (si viene con minúsculas o espacios)
 df[COL_SEXO] = df[COL_SEXO].astype('string').str.strip().str.upper()
 
-print('Valores únicos SEXO:', df[COL_SEXO].dropna().unique())
-print('Valores únicos EDAD_RANGO (sin NA):', pd.Series(df[COL_RANGO]).dropna().unique())
+print('Valores únicos SEXO:', df[COL_SEXO].unique())
+print('Valores únicos EDAD_RANGO (sin NA):', pd.Series(df[COL_RANGO]).unique())
 print('Faltantes EDAD_RANGO (%):', round(df[COL_RANGO].isna().mean()*100, 1))
 
 #Funciones auxiliares
@@ -153,24 +151,24 @@ def top_por_categoria(df, cat_col, rango_col):
 
 # General
 freq_general = tabla_frecuencias(df[COL_RANGO], incluir_na=True)
-display(freq_general.head(12))
+print(freq_general.head(12))
 
 # Por sexo
 freq_hombres = tabla_frecuencias(df.loc[df[COL_SEXO]=='HOMBRE', COL_RANGO], incluir_na=True)
 freq_mujeres = tabla_frecuencias(df.loc[df[COL_SEXO]=='MUJER', COL_RANGO], incluir_na=True)
 
 print('\n— HOMBRES —')
-display(freq_hombres.head(12))
+print(freq_hombres.head(12))
 
 print('\n— MUJERES —')
-display(freq_mujeres.head(12))
+print(freq_mujeres.head(12))
 
 # Modas (excluyendo NA)
 mg_val, mg_pct = moda_rango(df[COL_RANGO])
 mh_val, mh_pct = moda_rango(df.loc[df[COL_SEXO]=='HOMBRE', COL_RANGO])
 mm_val, mm_pct = moda_rango(df.loc[df[COL_SEXO]=='MUJER', COL_RANGO])
 
-print('\n=== MODAS DE EDAD_RANGO (Excluyendo NA) ===')
+print('\n=== MODAS DE EDAD_RANGO ===')
 print(f'General : {mg_val} ({mg_pct}%)')
 print(f'Hombres : {mh_val} ({mh_pct}%)')
 print(f'Mujeres : {mm_val} ({mm_pct}%)')
@@ -281,4 +279,65 @@ plt.hist(df['EDAD2'], bins=20, edgecolor='black')
 plt.title('Distribución de Edades del Personal FAC')
 plt.xlabel('Edad')
 plt.ylabel('Cantidad de Personal')
+plt.show()
+
+# === 1. Estado civil ===
+print("=== ANÁLISIS ESTADO CIVIL ===")
+print(df['ESTADO_CIVIL'].value_counts())
+
+# Porcentaje casados
+porc_casados = (df['ESTADO_CIVIL'].eq('CASADO').sum() / len(df)) * 100
+print(f"\nPorcentaje de casados: {porc_casados:.2f}%")
+
+# === 2. Hijos ===
+print("\n=== ANÁLISIS DE HIJOS ===")
+print(df['HIJOS'].value_counts())
+
+# Número de hijos y cuántos conviven con ellos
+print("\nNúmero de hijos declarados:")
+print(df['NUMERO_HIJOS'].value_counts().head())
+print("\nNúmero de hijos en el hogar:")
+print(df['HIJOS_EN_HOGAR'].value_counts().head())
+
+# === 3. Relación entre edad y estado civil ===
+print("\n=== RELACIÓN EDAD Y ESTADO CIVIL ===")
+print(df.groupby('ESTADO_CIVIL')['EDAD2'].mean().round(1))
+
+# === Gráfico estado civil ===
+plt.figure(figsize=(8, 5))
+df['ESTADO_CIVIL'].value_counts().plot(kind='bar', color='skyblue')
+plt.title('Distribución del Estado Civil')
+plt.xlabel('Estado Civil')
+plt.ylabel('Cantidad')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+
+
+# === Analisis Familiar ===
+
+print("=== DISTRIBUCIÓN DE MALTRATO INTRAFAMILIAR ===")
+print(df['MALTRATO_INTRAFAMILIAR'].value_counts(dropna=False))
+print(df['MALTRATO_INTRAFAMILIAR'].value_counts(normalize=True) * 100)
+
+maltrato_estado = pd.crosstab(df['ESTADO_CIVIL'], df['MALTRATO_INTRAFAMILIAR'], normalize='index') * 100
+print("=== MALTRATO POR ESTADO CIVIL (%) ===")
+print(maltrato_estado)
+
+maltrato_hijos = pd.crosstab(df['HIJOS'], df['MALTRATO_INTRAFAMILIAR'], normalize='index') * 100
+print("=== MALTRATO SEGÚN SI TIENE HIJOS (%) ===")
+print(maltrato_hijos)
+
+maltrato_num_hijos = pd.crosstab(df['NUMERO_HIJOS'], df['MALTRATO_INTRAFAMILIAR'], normalize='index') * 100
+print("=== MALTRATO POR NÚMERO DE HIJOS (%) ===")
+print(maltrato_num_hijos)
+
+print("=== EDAD PROMEDIO SEGÚN MALTRATO ===")
+print(df.groupby('MALTRATO_INTRAFAMILIAR')['EDAD2'].mean())
+
+df['MALTRATO_INTRAFAMILIAR'].value_counts().plot(kind='bar')
+plt.title("Casos de Maltrato Intrafamiliar")
+plt.xlabel("Maltrato Intrafamiliar")
+plt.ylabel("Número de personas")
 plt.show()

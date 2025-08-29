@@ -1,11 +1,11 @@
 # calidad_datos.py
 
 import pandas as pd
-import missingno as msno
-import openpyxl
+import missingno as msno 
+import matplotlib.pyplot as plt
 
 # Leer los datos
-df = pd.read_excel('analisis-datos-fac-equipo-3/datos/JEFAB_2024.xlsx')
+df = pd.read_excel('datos\\JEFAB_2024.xlsx')
 
 
 # Cambio de variables
@@ -38,10 +38,12 @@ print(missing_info.head(10))
 col = missing_info["Columna"].head(10)
 miss = df[col]
 msno.bar(miss, sort= "descending", color = "lightcoral")
+plt.show()
 
 # Mapa de calor de faltantes
 
 msno.heatmap(df)
+
 
 # Análisis de duplicados
 print(f"\n=== ANÁLISIS DE DUPLICADOS ===")

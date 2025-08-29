@@ -78,7 +78,11 @@ Ejemplos:
 ---
 
 ## 8. Base resultante
-Después de identificar las variables relevantes, se identificaron la presencia de datos faltantes pero en menor proporción, por ende se eliminó el 7,8% de la base de datos para trabajar sin datos faltantes.
+Después de identificar las variables relevantes, se identificaron la presencia de datos faltantes pero en menor proporción, por ende se eliminó el 7,8% de la base de datos para trabajar sin datos faltantes.Con una estructura de:
+
+- **Número de filas:** 5.991 
+- **Número de columnas:** 22
+
 
 ---
 
