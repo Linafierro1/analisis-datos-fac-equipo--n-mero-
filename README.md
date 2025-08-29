@@ -8,11 +8,11 @@ Realizar un análisis básico de datos reales de la encuesta de **bienestar fami
 - **Estudiante B**: Especialista en datos familiares  
 - **Estudiante C**: Experto en calidad de datos  
 
-Repositorio: `analisis-datos-fac-equipo-[número]`
+Repositorio: `analisis-datos-fac-equipo-3`
 
 ## 📂 Estructura del Proyecto
 
-`analisis-datos-fac-equipo-X/`  
+`analisis-datos-fac-equipo-3/`  
 ├── 📄 `README.md` — Descripción general del proyecto  
 ├── 📄 `datos_exploracion.py` — Archivo principal integrado  
 ├── 📄 `resultados_analisis.md` — Reporte conjunto del equipo  
