@@ -76,9 +76,6 @@ Se observa que en todos los casos la **banda 33–37** concentra la mayor propor
 4. Las cohortes mayores de **58 años** tienen baja representación (<4%), lo que indica una población principalmente joven-adulta.  
 
 
-## Diferencias por género
-La distribución muestra una mayor proporción de personal **masculino (69.3%)** frente a **femenino (30.4%)**. Otros géneros representan menos del 0.3%.
-
 ## Grado militar más frecuente
 El valor "NO RESPONDE" es el más reportado (1929 casos). Excluyéndolo, los grados más frecuentes son:
 - T3 (622 personas)
