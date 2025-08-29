@@ -11,16 +11,18 @@ Realizar un análisis básico de datos reales de la encuesta de **bienestar fami
 Repositorio: `analisis-datos-fac-equipo-[número]`
 
 ## 📂 Estructura del Proyecto
-analisis-datos-fac-equipo-X/
-├── 📄 README.md # Descripción general del proyecto
-├── 📄 datos_exploracion.py # Archivo principal integrado
-├── 📄 resultados_analisis.md # Reporte conjunto del equipo
-├── 📁 datos/
-│ └── 📄 JEFAB_2024.xlsx # Base de datos original (6.424 registros, 261 variables)
-└── 📁 reportes/
-├── 📄 demografia_basica.md # Reporte Estudiante A
-├── 📄 analisis_familiar.md # Reporte Estudiante B
-└── 📄 calidad_datos.md # Reporte Estudiante C
+
+`analisis-datos-fac-equipo-X/`  
+├── 📄 `README.md` — Descripción general del proyecto  
+├── 📄 `datos_exploracion.py` — Archivo principal integrado  
+├── 📄 `resultados_analisis.md` — Reporte conjunto del equipo  
+├── 📁 `datos/`  
+│   └── 📄 `JEFAB_2024.xlsx` — Base de datos original (6.424 registros, 261 variables)  
+└── 📁 `reportes/`  
+    ├── 📄 `demografia_basica.md` — Reporte Estudiante A  
+    ├── 📄 `analisis_familiar.md` — Reporte Estudiante B  
+    └── 📄 `calidad_datos.md` — Reporte Estudiante C  
+
 
 ## 🚀 Tareas por Estudiante
 ### 👤 Estudiante A: Análisis Demográfico
