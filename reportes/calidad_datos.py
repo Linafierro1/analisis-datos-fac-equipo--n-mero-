@@ -2,9 +2,11 @@
 
 import pandas as pd
 import missingno as msno
+import openpyxl
 
 # Leer los datos
-df = pd.read_excel('datos/JEFAB_2024.xlsx')
+df = pd.read_excel('analisis-datos-fac-equipo-3/datos/JEFAB_2024.xlsx')
+
 
 # Cambio de variables
 
@@ -18,9 +20,6 @@ for i in range(len(df)):
 for col in df.select_dtypes(include="object").columns:
     df[col] = df[col].astype("category")
 
-#Exportar resultado
-
-df.to_excel("datos/JEFAB_2024_v2.xlsx", index=False)
 
 # Análisis de datos faltantes
 
@@ -58,3 +57,18 @@ problematic_columns = [col for col in df.columns if 'Ã' in col or 'â' in col]
 print(f"Columnas con encoding problemático: {len(problematic_columns)}")
 for col in problematic_columns[:5]:
     print(f"  - {col}")
+
+# selección de variables relevantes
+cols = ["ESTADO_CIVIL", "RELACION_PAREJA_ESTABLE", "TIPOLOGIA_FAMILIAR", "HIJOS", "NUMERO_HIJOS", "HIJOS_EN_HOGAR", "MIEMBROS_COMPARTE_VIVIENDA", "VIVIENDA_PROPIA", 
+        "VIVE_EN_ARRIENDO", "PERSONA_APOYO_PROBLEMAS", "INTEGRANTE_RED_APOYO", "ACTIVIDADES_FAMILIARES_TIMPO_LIBRE", "MALTRATO_INTRAFAMILIAR", "DISCAPACIDAD","SEXO", 
+        "GENERO", "EDAD2", "EDAD_RANGO", "GRADO", "CATEGORIA", "ESTRATO", "NIVEL_EDUCATIVO"]
+
+for col in df.columns:
+    if col not in cols:
+        df.drop(col, axis=1, inplace=True)
+
+df.dropna(inplace=True)
+
+#Exportar resultado
+
+df.to_excel("datos/JEFAB_2024_v2.xlsx", index=False)

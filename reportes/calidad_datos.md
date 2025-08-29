@@ -1,4 +1,3 @@
-"""
 # Informe de Calidad de Datos – JEFAB 2024
 
 ## 1. Descripción General
@@ -76,12 +75,9 @@ Ejemplos:
 - `"TECNOLÃ“GICO"` (debería ser *TECNOLÓGICO*).  
 - `"CON SU PAREJAÂ ;PADRE O MADRE;"`.  
 
-Se recomienda aplicar una limpieza adicional con `df.rename(columns=lambda x: x.encode('latin1').decode('utf8'))` para identificar las etiquetas unificadas de cada categoria.
-
 ---
 
 ## 8. Conclusiones
 - La base de datos tiene buena estructura general, sin duplicados, pero presenta **valores faltantes importantes en variables clave** (hijos, personas en el hogar, edades de padres) ya sea por omisión de registro o cuestión social para no diligenciar el dato.
 - Existen problemas de codificación en textos que requieren corrección para análisis descriptivos.
 - El siguiente paso lógico sería **aplicar imputación de valores faltantes** .
-"""
