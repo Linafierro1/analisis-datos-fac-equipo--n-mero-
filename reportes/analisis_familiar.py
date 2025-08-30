@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Leer los datos
-df = df = pd.read_excel(r"C:\Users\jpedrazag\Downloads\JEFAB_2024.xlsx")
+df = df = pd.read_excel(r"C:\Users\jpedrazag\Downloads\JEFAB_2024_v2.xlsx")
 
 # === 1. Estado civil ===
 print("=== ANÁLISIS ESTADO CIVIL ===")
